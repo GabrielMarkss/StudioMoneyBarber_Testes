@@ -1,0 +1,799 @@
+/* BARRA DE NAVEGAÇÃO */
+nav {
+  background-color: black;
+  padding: 10px 20px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.studiobarber {
+  font-size: 25px;
+  font-weight: lighter;
+  color: white;
+  margin-left: 10px;
+  margin-top: 15px;
+}
+
+/* MENU DA NAVBAR */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-button {
+  background-color: #f46d25;
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.dropdown-button:hover {
+  background-color: #f56625; /* 10% mais escura */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0; /* alinha pela margem direita */
+  background-color: white;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 160px;
+  border-radius: 5px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(190, 190, 190, 0.9);
+  border-radius: 5px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* INFORMAÇÕES DO LOCAL */
+.hero-section {
+  background: url("/assets/carrousel1.png") no-repeat center center/cover;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* IMAGENS BARBEIROS */
+.image-container {
+  display: flex;
+  gap: 4rem;
+  position: absolute;
+  transform: translate(-50%, -30%);
+}
+
+/* Quando a largura da tela for de pelo menos 1055px */
+@media (min-width: 1055px) {
+  .image-container {
+    top: -150px;
+  }
+}
+
+@media (min-width: 757px) {
+  .image-container {
+    top: -150px;
+  }
+}
+
+/* Quando a largura da tela for de até 737px */
+@media (max-width: 757px) {
+  .image-container {
+    top: -250px;
+  }
+}
+
+.hero-image {
+  width: 190px;
+  height: 190px;
+  border-radius: 100%;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.hero-image:hover {
+  transform: scale(1.1);
+}
+
+.contact-info {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+  gap: 20px;
+}
+
+.contact-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-left: none;
+  border-right: none;
+}
+
+.redes {
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  padding: 0 20px;
+}
+
+@media (max-width: 1058px) {
+  .divider {
+    border-style: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .contact-info {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .contact-box {
+    text-align: left;
+  }
+}
+
+.contact-box a {
+  color: white;
+  text-decoration: none;
+}
+
+.profile-box h3 {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.contact-text {
+  font-size: 16px;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.contact-text a {
+  color: #25d366;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-text a:hover {
+  text-decoration: underline;
+}
+
+.span-agendamento {
+  line-height: 22px;
+}
+
+.agendar-btn {
+  color: white;
+  font-size: 17px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.agendar-btn:hover {
+  text-decoration: underline;
+}
+
+/* Estilo do Modal */
+
+.info-overlay {
+  position: absolute;
+  bottom: 0; /* Alinha no rodapé da imagem */
+  left: 20px;
+  right: 20px;
+  margin-bottom: 0;
+  z-index: 5;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border-radius: 10px 10px 0 0; /* Arredonda topo, se quiser um visual mais suave */
+}
+
+.info-section {
+  flex: 1 1 300px;
+  margin: 10px;
+}
+
+.divider {
+  border: 1px solid white;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.nome,
+.descricao {
+  border: 1px solid #888;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 300px;
+}
+
+/* FOOTER */
+.footer {
+  background: url("/assets/barbearia2.jpeg") no-repeat center center/cover;
+  color: white;
+  padding: 50px 20px;
+  margin-top: 100px;
+  overflow: hidden;
+  background-attachment: fixed;
+}
+
+.contact h2,
+.contact h3.book-button,
+.instagram h2 {
+  font-size: 40px;
+  word-wrap: break-word;
+}
+
+.contact p {
+  font-size: 20px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.contact,
+.instagram {
+  width: 40%;
+  max-width: 100%;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  object-fit: cover;
+}
+
+.route-btn {
+  background: #f46d25;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  margin-top: 50px;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.route-btn:hover {
+  background-color: #f56625;
+}
+
+.footer-infos {
+  background-color: black;
+}
+
+/* CARDS CARROUSEL */
+.botao-adicionar,
+.botao-editar {
+  width: 37px;
+  height: 35px;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #f46d25;
+  color: white;
+}
+
+.botao-adicionar:hover {
+  background-color: #d95512;
+}
+
+.botao-editar:hover {
+  background-color: #d95512;
+}
+
+/* Container externo centralizado */
+.container {
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f5f3;
+}
+
+/* Card com padding uniforme */
+.card {
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Grupo de campos com padding lateral de 20px */
+.form-group {
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 1.2rem;
+  box-sizing: border-box;
+}
+
+/* Inputs e textarea */
+.form-control {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 16px;
+  font-family: "Trebuchet MS", sans-serif;
+  transition: border-color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #f46d25;
+  outline: none;
+}
+
+/* Textarea com altura maior */
+textarea.desc {
+  height: 100px;
+  resize: none;
+}
+
+/* Prévia da imagem */
+img.img-preview {
+  max-height: 200px;
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+/* Grupo de botões com espaço */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1.5rem;
+}
+
+/* Botões */
+.btn-criar,
+.btn-cancelar-card {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 17px;
+  font-weight: bold;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* Estilos específicos */
+.btn-criar {
+  background-color: #f46d25;
+  border: 2px solid #f46d25;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-criar:disabled {
+  background-color: #b0b0b0;
+  border: 2px solid #b0b0b0;
+  color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.btn-cancelar-card {
+  background-color: white;
+  color: #f46d25;
+  border: 2px solid #f46d25;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-cancelar-card:hover {
+  background-color: #ff6600;
+  color: white;
+  cursor: pointer;
+}
+
+/* TABELA */
+
+.dashboard-container {
+  display: flex;
+  height: 800px;
+  width: 100vw;
+  margin: 50px 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.coluna-esquerda {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 50px;
+}
+
+.imagem-dashboard {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.conteudo-esquerda {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.conteudo-direita {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* alinha à esquerda */
+  margin-top: 30px;
+}
+
+.conteudo-direita h2 {
+  margin: 0; /* Tira margem extra superior/inferior */
+  font-size: 25px;
+}
+
+.avaliacao {
+  color: #f46d25;
+  margin-top: -5px; /* Aproxima do h2 */
+  font-size: 25px;
+}
+
+.botao-agendar {
+  background-color: #f46d25;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  width: auto;
+  max-width: 100%;
+  margin-top: 10px;
+}
+
+.coluna-tabela {
+  flex: 1;
+  min-width: 200px;
+}
+
+.botao-agendar {
+  background-color: #f46d25;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.paginacao {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.pagina {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid #f46d25;
+  color: #f46d25;
+  background: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pagina.ativa {
+  background: #f56625;
+  color: white;
+}
+
+.cabecalho-direita {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.botao-adicionar-container {
+  margin-left: 10px;
+}
+
+.botao-adicionar {
+  font-size: 20px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: #f46d25;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form-servico {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-servico {
+  margin-top: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.botoes-servico {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-adc-serviço {
+  background-color: #f46d25;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.btn-cancelar-servico {
+  background-color: white;
+  color: #f46d25;
+  border: 2px solid #f46d25;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.btn-cancelar-servico:hover {
+  background-color: #f46d25;
+  color: white;
+  font-weight: bold;
+}
+
+/* PLANO DE FIDELIDADE */
+
+.plano-fidelidade-fundo {
+  background-color: #ffffff;
+  width: 100vw;
+  padding: 60px 0;
+  margin: 0;
+}
+
+.plano-fidelidade-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.plano-texto {
+  flex: 1;
+  min-width: 400px;
+  font-size: 18px;
+}
+
+.plano-imagem {
+  flex: 1;
+  min-width: 300px;
+  text-align: center;
+}
+
+.plano-imagem img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+}
+
+.planos,
+.planos a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.planos :hover,
+.planos a :hover {
+  text-decoration: underline 2px;
+}
+
+.btn-plano {
+  background-color: #f46d25;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-plano:hover {
+  background-color: #f56625;
+}
+
+/* FOOTER */
+.footer {
+  background: url("/assets/barbearia2.jpeg") no-repeat center center/cover;
+  color: white;
+  padding: 50px 20px;
+  margin-top: 100px;
+  overflow: hidden;
+  background-attachment: fixed;
+}
+
+.contact h2,
+.contact h3.book-button,
+.instagram h2 {
+  font-size: 40px;
+  word-wrap: break-word;
+}
+
+.contact p {
+  font-size: 20px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.contact,
+.instagram {
+  width: 40%;
+  max-width: 100%;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  object-fit: cover;
+}
+
+.route-btn {
+  background: #f46d25;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  margin-top: 50px;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.route-btn:hover {
+  background-color: #f56625;
+}
+
+.footer-infos {
+  background-color: black;
+}

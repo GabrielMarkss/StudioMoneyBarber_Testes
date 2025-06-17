@@ -1,0 +1,83 @@
+<div class="body" style="background-color: #f1edec">
+  <nav>
+    <div class="nav-container">
+      <div class="logo-e-texto" style="display: flex; align-items: center">
+        <a routerLink="/home" style="text-decoration: none">
+          <img src="assets/logo.png" width="80px" alt="Logo" />
+        </a>
+        <span class="studiobarber">Studio Money Barber</span>
+      </div>
+
+      <div class="botao">
+        <button class="botao" type="button" [routerLink]="'/login'">
+          Fazer login
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="image-container">
+        <div class="profile-box">
+          <img src="assets/felipe.png" alt="Felipe" class="hero-image" />
+          <h3>Felipe</h3>
+          <p class="contact-text">
+            Falar com:
+            <a
+              href="https://api.whatsapp.com/send?phone=5562999361327"
+              target="_blank"
+              >(62) 99936-1327</a
+            >
+          </p>
+          <span class="span-agendamento">
+            Você pode agendar com Felipe pelo WhatsApp ou
+            <a [routerLink]="'/login'" class="agendar-btn"
+              >Agende Online por aqui</a
+            >
+          </span>
+        </div>
+
+        <div class="profile-box">
+          <img src="assets/ezequiel.png" alt="Ezequiel" class="hero-image" />
+          <h3>Ezequiel</h3>
+          <p class="contact-text">
+            Falar com:
+            <a
+              href="https://api.whatsapp.com/send?phone=5562991145896"
+              target="_blank"
+              >(62) 99114-5896</a
+            >
+          </p>
+          <span class="span-agendamento">
+            Você pode agendar com Ezequiel pelo WhatsApp ou
+            <a [routerLink]="'/login'" class="agendar-btn"
+              >Agende Online por aqui</a
+            >
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-overlay">
+      <div class="info-section">
+        <h3>ENDEREÇO</h3>
+        <p>
+          Rua L-02, nº93, Qd-06, Lt-09<br />Bairro Feliz, Goiânia, GO, CEP:
+          74630-190
+        </p>
+      </div>
+      <div class="divider"></div>
+      <div class="info-section">
+        <h3>INSTAGRAM</h3>
+        <p>Visite nossa página:<br />Instagram: studio_money_barber</p>
+      </div>
+      <div class="divider"></div>
+      <div class="info-section">
+        <h3>HORÁRIOS</h3>
+        <p>Segunda a Sexta: 8h às 22h<br />Sábado: 9h às 19h</p>
+      </div>
+    </div>
+  </section>
+</div>

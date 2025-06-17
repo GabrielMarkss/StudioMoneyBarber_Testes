@@ -1,0 +1,30 @@
+<div class="body">
+  <div class="form-box">
+    <h2>Login</h2>
+
+    <input
+      type="text"
+      [(ngModel)]="identificador"
+      placeholder="Email ou Telefone"
+      (input)="onInputIdentificador()"
+    />
+
+    <input [(ngModel)]="senha" placeholder="Senha" type="password" />
+
+    <div class="form-group checkbox-group">
+      <input
+        type="checkbox"
+        id="permanecerConectado"
+        [(ngModel)]="permanecerConectado"
+      />
+      <label for="permanecerConectado">Permanecer conectado</label>
+    </div>
+
+    <button (click)="login()">Entrar</button>
+
+    <!-- Link para cadastro -->
+    <div class="register-link" style="margin-top: 1rem; text-align: center">
+      <a routerLink="/cadastrar">Cadastrar-se</a>
+    </div>
+  </div>
+</div>

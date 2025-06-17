@@ -1,0 +1,23 @@
+<div class="body">
+  <div class="form-box">
+    <h2>Cadastro</h2>
+    <div class="form-row">
+      <input [(ngModel)]="usuario.nome" placeholder="Nome" />
+      <input [(ngModel)]="usuario.sobrenome" placeholder="Sobrenome" />
+    </div>
+    <input [(ngModel)]="usuario.email" placeholder="Email" />
+    <input
+      [(ngModel)]="usuario.telefone"
+      placeholder="Telefone (opcional)"
+      (input)="onTelefoneInput()"
+      (keypress)="somenteNumeros($event)"
+      maxlength="15"
+      type="tel"
+    />
+    <input [(ngModel)]="usuario.senha" placeholder="Senha" type="password" />
+    <button (click)="cadastrar()">Cadastrar</button>
+    <div class="login-link" style="margin-top: 1rem; text-align: center">
+      <a routerLink="/login">Login</a>
+    </div>
+  </div>
+</div>

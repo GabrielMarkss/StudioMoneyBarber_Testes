@@ -1,0 +1,9 @@
+html,
+body {
+  height: 100%;
+  background-color: #f1edec;
+}
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

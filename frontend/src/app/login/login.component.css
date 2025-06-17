@@ -1,0 +1,74 @@
+/* Container que centraliza o conteúdo na tela */
+.body {
+  background-image: url("/assets/barberpole.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Bloco do formulário */
+.form-box {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
+  width: 320px;
+  max-width: 100%;
+  text-align: center;
+}
+
+/* Título */
+.form-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Inputs estilo básico */
+.form-box input[type="text"],
+.form-box input[type="password"],
+.form-box input[type="email"],
+.form-box input[type="tel"] {
+  width: 100%;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+  user-select: none;
+  justify-content: flex-start;
+  margin-top: 5px;
+}
+
+/* Botão */
+.form-box button {
+  width: 100%;
+  background-color: #007bff;
+  border: none;
+  padding: 12px;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.form-box button:hover {
+  background-color: #0056b3;
+}

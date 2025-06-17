@@ -1,0 +1,486 @@
+<div class="body">
+  <nav>
+    <div
+      class="nav-container"
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <div class="logo-e-texto" style="display: flex; align-items: center">
+        <a routerLink="/dashboard" style="text-decoration: none">
+          <img src="assets/logo.png" width="80px" alt="Logo" />
+        </a>
+        <span class="studiobarber" style="margin-left: 10px"
+          >Studio Money Barber</span
+        >
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 15px">
+        <div class="dropdown" style="position: relative">
+          <button class="dropdown-button">Menu</button>
+          <div class="dropdown-content" style="position: absolute; right: 0">
+            <a routerLink="/horarios">Horários</a>
+            <a routerLink="/promocoes">Promoções</a>
+            <a routerLink="/galeria">Galeria</a>
+            <a routerLink="/produtos">Produtos</a>
+          </div>
+        </div>
+
+        <!-- Botão logout com imagem -->
+        <button
+          (click)="logout()"
+          title="Logout"
+          style="background: none; border: none; cursor: pointer; padding: 0"
+        >
+          <img src="assets/sair.png" alt="Logout" width="45" height="40" />
+        </button>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="image-container">
+      <div class="profile-box">
+        <img src="assets/felipe.png" alt="Felipe" class="hero-image" />
+        <h3>Felipe</h3>
+        <p class="contact-text">
+          Falar com:
+          <a
+            href="https://api.whatsapp.com/send?phone=5562999361327"
+            target="_blank"
+            >(62) 99936-1327</a
+          >
+        </p>
+        <span class="span-agendamento">
+          Você pode agendar com Felipe pelo WhatsApp ou
+          <a [routerLink]="'/login'" class="agendar-btn"
+            >Agende Online por aqui</a
+          >
+        </span>
+      </div>
+
+      <div class="profile-box">
+        <img src="assets/ezequiel.png" alt="Ezequiel" class="hero-image" />
+        <h3>Ezequiel</h3>
+        <p class="contact-text">
+          Falar com:
+          <a
+            href="https://api.whatsapp.com/send?phone=5562991145896"
+            target="_blank"
+            >(62) 99114-5896</a
+          >
+        </p>
+        <span class="span-agendamento">
+          Você pode agendar com Ezequiel pelo WhatsApp ou
+          <a [routerLink]="'/login'" class="agendar-btn"
+            >Agende Online por aqui</a
+          >
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-overlay">
+    <div class="info-section">
+      <h3>ENDEREÇO</h3>
+      <p>
+        Rua L-02, nº93, Qd-06, Lt-09<br />Bairro Feliz, Goiânia, GO, CEP:
+        74630-190
+      </p>
+    </div>
+    <div class="divider"></div>
+    <div class="info-section">
+      <h3>INSTAGRAM</h3>
+      <p>Visite nossa página:<br />Instagram: studio_money_barber</p>
+    </div>
+    <div class="divider"></div>
+    <div class="info-section">
+      <h3>HORÁRIOS</h3>
+      <p>Segunda a Sexta: 8h às 22h<br />Sábado: 9h às 19h</p>
+    </div>
+  </div>
+</section>
+
+<!-- TÍTULO + BOTÕES DE AÇÃO -->
+<div
+  class="cabecalho-card"
+  style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 50px;
+    margin-bottom: 1rem;
+  "
+>
+  <h2 style="margin: 0">Serviços mais agendados</h2>
+
+  <!-- Botão Criar Card -->
+  <button class="botao-adicionar" (click)="toggleCardForm()">+</button>
+
+  <!-- Botão Editar Card por ID -->
+  <button class="botao-editar" (click)="toggleEditByIdForm()">✎</button>
+</div>
+
+<!-- LISTAGEM DE CARDS -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col" *ngFor="let card of cards">
+    <div class="card h-100 shadow-sm">
+      <img
+        [src]="card.imagemUrl"
+        class="card-img-top"
+        alt="{{ card.titulo }}"
+        style="max-height: 200px; object-fit: cover"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ card.titulo }}</h5>
+        <p class="card-text">{{ card.descricao }}</p>
+      </div>
+      <div class="card-footer text-end">
+        <button class="btn btn-sm btn-warning me-2" (click)="editarCard(card)">
+          Editar
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="deletarCard(card.id!)">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMULÁRIO DE CARD -->
+<div class="container" *ngIf="showCardForm">
+  <div class="card shadow-lg">
+    <div class="card-header text-center mb-3">
+      <h5 class="mb-0">{{ isEditandoCard ? "Editar Card" : "Novo Card" }}</h5>
+    </div>
+
+    <form [formGroup]="cardForm" (ngSubmit)="salvarCard()" class="form">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="titulo"
+          placeholder="Título"
+        />
+      </div>
+
+      <div class="form-group">
+        <textarea
+          class="form-control desc"
+          formControlName="descricao"
+          placeholder="Descrição"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="file"
+          class="form-control"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+
+      <div class="form-group text-center" *ngIf="imagePreview">
+        <img
+          [src]="imagePreview"
+          class="img-fluid rounded"
+          style="max-height: 200px; max-width: 100%"
+        />
+      </div>
+
+      <div class="button-group">
+        <button
+          type="submit"
+          class="btn btn-criar"
+          [disabled]="cardForm.invalid"
+        >
+          {{ isEditandoCard ? "Atualizar" : "Adicionar Card" }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-cancelar-card"
+          (click)="resetarCardForm()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FORMULÁRIO DE EDIÇÃO DE CARD POR ID -->
+<div class="container" *ngIf="showEditByIdForm">
+  <div class="card shadow-lg">
+    <div class="card-header text-center mb-3">
+      <h5 class="mb-0">Editar Card por ID</h5>
+    </div>
+
+    <form
+      [formGroup]="editCardForm"
+      (ngSubmit)="editarCardPorId()"
+      class="form"
+    >
+      <!-- Campo de ID -->
+      <div class="form-group">
+        <input
+          type="number"
+          class="form-control"
+          formControlName="id"
+          placeholder="ID do Card"
+        />
+      </div>
+
+      <!-- Campo de Título -->
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="titulo"
+          placeholder="Título"
+        />
+      </div>
+
+      <!-- Campo de Descrição -->
+      <div class="form-group">
+        <textarea
+          class="form-control desc"
+          formControlName="descricao"
+          placeholder="Descrição"
+        ></textarea>
+      </div>
+
+      <!-- Campo de Imagem -->
+      <div class="form-group">
+        <input
+          type="file"
+          class="form-control"
+          (change)="onEditFileSelected($event)"
+        />
+      </div>
+
+      <!-- Preview da Imagem -->
+      <div class="form-group text-center" *ngIf="editImagePreview">
+        <img
+          [src]="editImagePreview"
+          class="img-fluid rounded"
+          style="max-height: 200px; max-width: 100%"
+        />
+      </div>
+
+      <!-- Botões -->
+      <div class="button-group">
+        <button
+          type="submit"
+          class="btn btn-warning"
+          [disabled]="editCardForm.invalid"
+        >
+          Atualizar Card por ID
+        </button>
+        <button
+          type="button"
+          class="btn btn-cancelar-card"
+          (click)="resetarEditCardForm()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="cards-container">
+  <div *ngFor="let card of cards" class="card-box">
+    <img [src]="card.imagemUrl" alt="Imagem do Card" />
+    <h3>{{ card.titulo }}</h3>
+    <p>{{ card.descricao }}</p>
+  </div>
+</div>
+
+<!-- DASHBOARD DE SERVIÇOS -->
+<div class="dashboard-container" style="background-color: white">
+  <div class="coluna-esquerda">
+    <img src="assets/cortecanvas.png" class="imagem-dashboard" />
+
+    <div class="conteudo-esquerda">
+      <!-- Tabela de Serviços -->
+      <div class="tabela-container" *ngIf="precos.length > 0">
+        <div class="tabela-colunas">
+          <!-- Primeira metade -->
+          <div class="coluna-tabela">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Preço</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let preco of precosPagina1">
+                  <td>{{ preco.nome }}</td>
+                  <td>{{ preco.preco | currency : "BRL" }}</td>
+                  <td>
+                    <button (click)="editarServico(preco)">Editar</button>
+                    <button
+                      *ngIf="preco.id !== undefined"
+                      (click)="deletarServico(preco.id)"
+                    >
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Segunda metade -->
+          <div class="coluna-tabela">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Preço</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let preco of precosPagina2">
+                  <td>{{ preco.nome }}</td>
+                  <td>{{ preco.preco | currency : "BRL" }}</td>
+                  <td>
+                    <button (click)="editarServico(preco)">Editar</button>
+                    <button
+                      *ngIf="preco.id !== undefined"
+                      (click)="deletarServico(preco.id)"
+                    >
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="paginacao">
+          <button class="pagina ativa" (click)="trocarPagina(1)">1</button>
+          <button class="pagina" (click)="trocarPagina(2)">2</button>
+        </div>
+      </div>
+
+      <!-- Título e botão de serviço -->
+      <div class="conteudo-direita">
+        <div class="cabecalho-direita">
+          <h2>Tabela de Preços</h2>
+          <div class="botao-adicionar-container">
+            <button class="botao-adicionar" (click)="toggleServicoForm()">
+              +
+            </button>
+          </div>
+        </div>
+
+        <div class="avaliacao">★★★★★</div>
+        <p><em>Serviços de qualidade e preços justos.</em></p>
+
+        <!-- Formulário de Serviço -->
+        <div *ngIf="showServicoForm" class="form-servico">
+          <form [formGroup]="servicoForm" (ngSubmit)="salvarServico()">
+            <input
+              type="text"
+              formControlName="nome"
+              placeholder="Nome do serviço"
+              class="input-servico"
+              required
+            />
+            <input
+              type="number"
+              formControlName="preco"
+              placeholder="Preço"
+              class="input-servico"
+              required
+            />
+
+            <div class="botoes-servico">
+              <button type="submit" class="btn-adc-serviço">
+                Adicionar Serviço
+              </button>
+              <button
+                type="button"
+                class="btn-cancelar-servico"
+                (click)="toggleServicoForm()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <button class="botao-agendar">AGENDAR AGORA</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="plano-fidelidade-fundo">
+  <div class="plano-fidelidade-container">
+    <!-- Texto -->
+    <div class="plano-texto">
+      <h2>Plano de Fidelidade Mensal</h2>
+      <p>
+        Assine nosso plano de fidelidade todo mês e aproveite benefícios
+        exclusivos!
+      </p>
+      <p class="planos">
+        <a [routerLink]="'/plano-padrao'">Plano Padrão</a> |
+        <a [routerLink]="'/plano-premium'">Plano Premium</a>
+      </p>
+      <button [routerLink]="'/home'" class="btn-plano mt-3">
+        ASSINAR PLANO
+      </button>
+    </div>
+
+    <!-- Imagem -->
+    <div class="plano-imagem">
+      <img
+        src="assets/fidelidade.png"
+        alt="Imagem de fidelidade"
+        class="img-fluid"
+      />
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-container">
+    <div class="contact">
+      <h2>Entre em contato por:</h2>
+      <p>
+        <i class="fas fa-phone"></i> Telefone/Celular<br />
+        <i class="fab fa-whatsapp"></i> WhatsApp<br />
+        <i class="fas fa-instagram"></i> Instagram
+      </p>
+      <h3>Endereço</h3>
+      <p>
+        Rua L-02, n°93, Qd-06 Lt-03<br />Bairro Feliz<br />Goiânia, Goiás, CEP
+        74630-190<br />A abaixo da Praça dos Amigos
+      </p>
+      <button class="route-btn" (click)="openGoogleMaps()">
+        Olhar rotas
+        <img
+          src="assets/google-maps.png"
+          width="50px"
+          alt="Google Maps"
+          style="border-radius: 10px"
+        />
+        <img
+          src="assets/waze.png"
+          width="50px"
+          style="border-radius: 10px"
+          alt="Waze"
+        />
+      </button>
+    </div>
+  </div>
+</footer>
