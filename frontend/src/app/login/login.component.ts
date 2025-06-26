@@ -27,10 +27,12 @@ export class LoginComponent {
     };
 
     this.service.login(payload).subscribe({
-      next: (response) => {
-        console.log('Login response:', response);
-        alert('Login realizado com sucesso!');
-        this.router.navigate(['/dashboard']);
+      next: () => {
+        // Aguarda carregamento do usuário para navegar
+        setTimeout(() => {
+          alert('Login realizado com sucesso!');
+          this.router.navigate(['/dashboard']);
+        }, 500);
       },
       error: (err) => {
         alert(err.error?.message || 'Erro ao fazer login');

@@ -11,7 +11,7 @@ import com.stmoneybarber.backend.service.JwtService;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class UsuarioController {
 
     @Autowired
@@ -78,6 +78,33 @@ public class UsuarioController {
         } catch (Exception e) {
             e.printStackTrace(); // Mostra o erro no console
             return ResponseEntity.status(500).body("Erro interno no servidor: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getUsuarioLogado(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401).body(Collections.singletonMap("erro", "Token ausente ou inválido"));
+        }
+
+        String token = authHeader.substring(7);
+
+        if (!jwtService.isTokenValid(token)) {
+            return ResponseEntity.status(401).body(Collections.singletonMap("erro", "Token inválido"));
+        }
+
+        String email = jwtService.extractEmail(token);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("nome", usuario.getNome());
+            userData.put("email", usuario.getEmail());
+            userData.put("admin", usuario.isAdmin()); // ⚠️ Certifique-se de que existe o getter isAdmin()
+            return ResponseEntity.ok(userData);
+        } else {
+            return ResponseEntity.status(404).body(Collections.singletonMap("erro", "Usuário não encontrado"));
         }
     }
 

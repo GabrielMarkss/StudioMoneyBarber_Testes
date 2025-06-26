@@ -9,21 +9,28 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    private boolean admin = false;
 
     private String nome;
-
     private String sobrenome;
 
     @Column(nullable = false, unique = true)
     private String email;
-
     @Column(unique = true)
     private String telefone;
-
     @Column(nullable = false)
     private String senha;
 
     // Getters e Setters
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     public String getNome() {
         return nome;
