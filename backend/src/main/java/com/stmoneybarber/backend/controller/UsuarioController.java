@@ -66,7 +66,7 @@ public class UsuarioController {
             if (usuarioOpt.isPresent()) {
                 Usuario usuario = usuarioOpt.get();
                 if (usuario.getSenha().equals(senha)) { // Em produção, use hash
-                    String token = jwtService.generateToken(usuario.getEmail());
+                    String token = jwtService.generateToken(usuario.getEmail(), usuario.isAdmin());
                     return ResponseEntity.ok(Collections.singletonMap("token", token));
                 } else {
                     return ResponseEntity.status(401).body("Senha incorreta");

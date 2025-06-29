@@ -1,7 +1,8 @@
+// dashteste.component.ts
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../service/usuario.service';
 import { NotificacaoService } from '../service/notificacao.service';
-import { Notificacao } from '../models/Notificacao.model';
+import { Notificacao } from '../models/Notificacao.model'
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -32,36 +33,10 @@ export class DashtesteComponent implements OnInit {
   constructor(
     public usuarioService: UsuarioService,
     private notificacaoService: NotificacaoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    const data = new Date();
-    const dias = [
-      'Domingo',
-      'Segunda',
-      'Terça',
-      'Quarta',
-      'Quinta',
-      'Sexta',
-      'Sábado',
-    ];
-    const meses = [
-      'jan',
-      'fev',
-      'mar',
-      'abr',
-      'mai',
-      'jun',
-      'jul',
-      'ago',
-      'set',
-      'out',
-      'nov',
-      'dez',
-    ];
-    this.dataHoje = `${dias[data.getDay()]}, ${data.getDate()} ${
-      meses[data.getMonth()]
-    } ${data.getFullYear()}`;
+    this.formatarDataHoje();
 
     if (this.usuarioService.isLoggedIn()) {
       this.usuarioService.getUsuarioLogado().subscribe({
@@ -71,6 +46,13 @@ export class DashtesteComponent implements OnInit {
     }
 
     this.listarNotificacoes();
+  }
+
+  private formatarDataHoje() {
+    const data = new Date();
+    const dias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    const meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    this.dataHoje = `${dias[data.getDay()]}, ${data.getDate()} ${meses[data.getMonth()]} ${data.getFullYear()}`;
   }
 
   abrirMenu() {
@@ -101,11 +83,7 @@ export class DashtesteComponent implements OnInit {
 
   cancelarFormulario() {
     this.mostrarFormulario = false;
-    this.nova = {
-      titulo: '',
-      descricao: '',
-      imagemUrl: '',
-    };
+    this.nova = { titulo: '', descricao: '', imagemUrl: '' };
     this.imagemSelecionada = null;
   }
 
@@ -113,7 +91,6 @@ export class DashtesteComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.imagemSelecionada = file;
-
       const reader = new FileReader();
       reader.onload = () => {
         this.nova.imagemUrl = reader.result as string;
@@ -122,29 +99,37 @@ export class DashtesteComponent implements OnInit {
     }
   }
 
+  usuarioEhAdmin(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role === 'ADMIN';
+    } catch {
+      return false;
+    }
+  }
+
   salvarNotificacao() {
     this.notificacaoService.criar(this.nova).subscribe(() => {
-      console.log('Notificação criada');
       this.cancelarFormulario();
       this.listarNotificacoes();
     });
   }
 
   listarNotificacoes() {
-    this.notificacaoService.listar().subscribe((res) => {
-      this.notificacoes = res;
-    });
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (token) {
+      this.notificacaoService.listarVisiveis(token).subscribe({
+        next: (res) => (this.notificacoes = res),
+        error: () => {
+          this.notificacaoService.listar().subscribe((res) => (this.notificacoes = res));
+        },
+      });
+    } else {
+      this.notificacaoService.listar().subscribe((res) => (this.notificacoes = res));
+    }
   }
 
-  confirmarRemocao(notificacao: Notificacao) {
-    const confirmar = confirm('Você deseja remover esta notificação?');
-    if (!confirmar) return;
 
-    const isAdmin = this.usuarioService.usuarioEhAdmin(); // crie esse método se necessário
-
-    this.notificacaoService.deletar(notificacao.id!, true, isAdmin).subscribe({
-      next: () => this.listarNotificacoes(),
-      error: (err) => alert(err.error || 'Erro ao remover notificação'),
-    });
-  }
 }

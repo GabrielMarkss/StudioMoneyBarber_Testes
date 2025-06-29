@@ -1,45 +1,71 @@
 package com.stmoneybarber.backend.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stmoneybarber.backend.model.Notificacao;
 import com.stmoneybarber.backend.service.NotificacaoService;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/notificacoes")
+@CrossOrigin(origins = "*")
 public class NotificacaoController {
 
-    @Autowired
-    private NotificacaoService service;
+    private final NotificacaoService service;
 
-    @PostMapping
-    public ResponseEntity<Notificacao> criar(@RequestBody Notificacao notificacao) {
-        return ResponseEntity.ok(service.criar(notificacao));
+    @Value("${upload.dir:uploads}")
+    private String uploadDir;
+
+    public NotificacaoController(NotificacaoService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public ResponseEntity<List<Notificacao>> listar() {
-        return ResponseEntity.ok(service.listarTodas());
+    public List<Notificacao> listar() {
+        return service.listar();
+    }
+
+    @PostMapping
+    public Notificacao criar(
+            @RequestParam("titulo") String titulo,
+            @RequestParam("descricao") String descricao,
+            @RequestParam(value = "imagem", required = false) MultipartFile imagem) throws IOException {
+
+        String imagePath = null;
+        if (imagem != null && !imagem.isEmpty()) {
+            File dir = new File(uploadDir);
+            if (!dir.exists())
+                dir.mkdirs();
+
+            String fileName = UUID.randomUUID() + "_" + imagem.getOriginalFilename();
+            File dest = new File(dir, fileName);
+            imagem.transferTo(dest);
+            imagePath = "/uploads/" + fileName;
+        }
+
+        Notificacao nova = new Notificacao();
+        nova.setTitulo(titulo);
+        nova.setDescricao(descricao);
+        nova.setImagemUrl(imagePath);
+
+        return service.criar(nova);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Notificacao> atualizar(@PathVariable Long id, @RequestBody Notificacao notificacao) {
+        return ResponseEntity.ok(service.atualizar(id, notificacao));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id,
-            @RequestParam(defaultValue = "false") boolean confirmar,
-            @RequestHeader("X-USER-ROLE") String role) {
-        if (role.equalsIgnoreCase("ADMIN")) {
-            if (!confirmar) {
-                return ResponseEntity.badRequest().body("Confirmação obrigatória para admin.");
-            }
-            service.deletarParaTodos(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            // lógica futura para apagar somente para o usuário
-            return ResponseEntity.status(403).body("Usuários normais não podem deletar globalmente.");
-        }
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
     }
-
 }

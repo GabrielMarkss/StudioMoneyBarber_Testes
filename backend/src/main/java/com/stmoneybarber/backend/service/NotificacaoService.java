@@ -1,29 +1,39 @@
 package com.stmoneybarber.backend.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.stmoneybarber.backend.model.Notificacao;
 import com.stmoneybarber.backend.repository.NotificacaoRepository;
 
+import java.util.List;
+
 @Service
 public class NotificacaoService {
-    @Autowired
-    private NotificacaoRepository repo;
+
+    private final NotificacaoRepository repository;
+
+    public NotificacaoService(NotificacaoRepository repository) {
+        this.repository = repository;
+    }
+
+    public List<Notificacao> listar() {
+        return repository.findAll();
+    }
 
     public Notificacao criar(Notificacao notificacao) {
-        return repo.save(notificacao);
+        return repository.save(notificacao);
     }
 
-    public List<Notificacao> listarTodas() {
-        return repo.findAll(Sort.by(Sort.Direction.DESC, "dataCriacao"));
+    public Notificacao atualizar(Long id, Notificacao novaNotificacao) {
+        return repository.findById(id).map(n -> {
+            n.setTitulo(novaNotificacao.getTitulo());
+            n.setDescricao(novaNotificacao.getDescricao());
+            n.setImagemUrl(novaNotificacao.getImagemUrl());
+            return repository.save(n);
+        }).orElseThrow(() -> new RuntimeException("Notificação não encontrada"));
     }
 
-    public void deletarParaTodos(Long id) {
-        repo.deleteById(id);
+    public void deletar(Long id) {
+        repository.deleteById(id);
     }
-
 }
